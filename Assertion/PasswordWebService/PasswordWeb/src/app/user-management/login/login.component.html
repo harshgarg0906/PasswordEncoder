@@ -1,0 +1,30 @@
+
+<div *ngIf="wrongCredentials">
+  <h1>User Not Exist</h1>
+  <button mat-raised-button color="warn" (click)="onLoginAgain()">LoginAgain</button>
+</div>
+
+
+
+
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()" *ngIf="!wrongCredentials">
+  <div fxLayout="column" class="alignitem">
+     <mat-form-field class="example-full-width">
+      <mat-label>PSID</mat-label>
+      <input matInput formControlName="psid" placeholder="123">
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+        <mat-label>PASSWORD</mat-label>
+        <input matInput  formControlName="password" placeholder="password" type="password" >
+    </mat-form-field> 
+  </div>
+
+  <div class="alignitem1" fxLayout  fxLayoutGap="10px">
+    <button mat-raised-button color="primary">Primary</button>
+   </div> 
+ 
+  </form>
+
+  <p *ngIf="wrongPassword" class="password">{{passwordWrong}}</p>
+  <button (click)="onClick()">Click</button>

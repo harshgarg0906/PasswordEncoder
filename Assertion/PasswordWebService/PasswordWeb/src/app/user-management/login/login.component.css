@@ -1,0 +1,22 @@
+.alignitem{
+    margin-left: 300px;
+    margin-right: 300px;
+    margin-top: 100px;
+}
+
+.alignitem1{
+    margin-left: 300px;
+    margin-right: 300px;
+    margin-top: 20px;
+}
+
+.password{
+    margin-top: 8%;
+    margin-left: 40%;
+    background-color: #f38888;
+    margin-right: 40%;
+    height: 6%;
+    width: 30%;
+    text-align: center;
+    padding-top: 10px;
+}

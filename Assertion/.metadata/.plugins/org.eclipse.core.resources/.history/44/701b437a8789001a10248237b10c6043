@@ -1,0 +1,11 @@
+package com.example.demo.service;
+
+public interface IUserService {
+	User createUser(User user);
+
+	List<User> findAll();
+
+	User searchByPsid(String psid);
+
+	User loadByUsername(HttpServletRequest request);
+}
