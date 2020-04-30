@@ -1,0 +1,17 @@
+package com.example.demo.service;
+
+import org.springframework.stereotype.Service;
+
+import com.example.demo.util.AES;
+
+@Service
+public class GeneratePasswordService {
+
+
+    final String secretKey = "ssshhhhhhhhhhh!!!!";
+	public String encryptPassword(String password)
+	{
+		 String encryptedString = AES.encrypt(password, secretKey) ;
+		 return encryptedString;
+	}
+}

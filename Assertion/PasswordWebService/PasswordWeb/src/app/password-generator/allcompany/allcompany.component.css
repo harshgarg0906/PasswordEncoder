@@ -1,0 +1,12 @@
+.mat-elevation-z8
+{
+    margin-left: 20%;
+    margin-right: 20%;
+    margin-top: 7%;
+    padding-left: 2%;
+}
+
+.mat-table {
+    background: #fff;
+    width: 96%;
+}

@@ -18,7 +18,6 @@ export class UserauthService {
   
   onLogin(form:UserData)
   {  
-      console.log('in the service')
       return this.http.post<LoginResponsse>(`http://localhost:8765/user/auth/login`,form)
       .pipe(catchError(errorRes=>{
         let errorMessage='';
@@ -37,8 +36,7 @@ export class UserauthService {
     console.log('in the get service')
     this.http.get('http://localhost:8765/user/auth/data').subscribe(
       (data)=>{
-        console.log('in the get subscribe')
-        console.log(data)
+
       }
     )
   }

@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
   }
   wrongPassword:boolean=false;
   passwordWrong:string='';
-  wrongCredentials:boolean=true;
+  wrongCredentials:boolean=false;
 
   ngOnInit(): void {
     this.loginForm=new FormGroup({
@@ -36,15 +36,11 @@ export class LoginComponent implements OnInit {
  {
    this.data.psid=this.loginForm.value.psid;
    this.data.password=this.loginForm.value.password;
-   console.log('in the submit')
-   console.log(this.data)
    this.userAuthService.onLogin(this.data).subscribe(
     (data)=>{
-      console.log('in the subscription')
       console.log(data)
       if(data.statusCode=='200')
       {
-        console.log('inside 200')
         this.route.navigate(['/password'])
       }
       if(data.statusCode==203)
@@ -53,11 +49,10 @@ export class LoginComponent implements OnInit {
          this.passwordWrong=data.message;
       }
     },(error)=>{
-      console.log('in the component error')
       if(error=="PSID Not Found")
       {
-        console.log(error)
         this.wrongCredentials=true;
+        this.wrongPassword=false;
       }
     }
   );;
@@ -70,6 +65,7 @@ export class LoginComponent implements OnInit {
 
  onLoginAgain()
  {
+   this.wrongPassword=false;
    this.wrongCredentials=false;
  }
 }

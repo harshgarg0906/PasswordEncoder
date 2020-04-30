@@ -1,0 +1,31 @@
+package com.example.demo.model;
+
+public class EncryptedPassword {
+
+	String encryptedpassword;
+	
+	public EncryptedPassword()
+	
+	{
+		
+	}
+
+	public EncryptedPassword(String encryptedpassword) {
+		
+		this.encryptedpassword = encryptedpassword;
+	}
+
+	public String getEncryptedpassword() {
+		return encryptedpassword;
+	}
+
+	public void setEncryptedpassword(String encryptedpassword) {
+		this.encryptedpassword = encryptedpassword;
+	}
+
+	@Override
+	public String toString() {
+		return "EncryptedPassword [encryptedpassword=" + encryptedpassword + "]";
+	}
+	
+}

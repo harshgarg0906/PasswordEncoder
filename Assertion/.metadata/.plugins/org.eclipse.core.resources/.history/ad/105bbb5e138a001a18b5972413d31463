@@ -1,0 +1,18 @@
+package com.example.demo.model;
+
+public class WebSiteData {
+
+	private String webSiteName;
+
+	public WebSiteData() {
+		
+	}
+
+	public WebSiteData(String webSiteName) {
+		this.webSiteName = webSiteName;
+	}
+	
+	
+	
+	
+}

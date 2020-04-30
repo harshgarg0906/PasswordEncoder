@@ -1,0 +1,25 @@
+package com.example.demo.controller;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.demo.model.EncryptedPassword;
+import com.example.demo.model.WebSiteData;
+
+@RestController
+public class GenerateController {
+	
+	
+	@PostMapping("/password")
+	public EncryptedPassword getPassword(@RequestBody WebSiteData websiteData)
+	{
+		String password=websiteData.getWebSiteName();
+		password=password.concat("hclsdbjsbdfskb");
+		System.out.println("in the password generators");
+		EncryptedPassword encryptedPassword=new EncryptedPassword(password);
+		return encryptedPassword;
+	}
+
+}

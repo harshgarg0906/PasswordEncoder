@@ -1,0 +1,13 @@
+package com.example.demo.model;
+
+public class EncryptedPassword {
+
+	String encryptedpassword;
+	
+	public EncryptedPassword()
+	
+	{
+		
+	}
+	
+}
