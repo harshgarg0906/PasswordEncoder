@@ -4,9 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.UUID;
+
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.exception.AllCompanyNotFoundException;
@@ -23,6 +27,7 @@ public class GenerateController {
 	@PostMapping("/password")
 	public EncryptedPassword getPassword(@RequestBody WebSiteData websiteData)
 	{
+		System.out.println("in the password generator");
 		String webSiteName=websiteData.getWebSiteName();
 		String encryptedPasswordObtained=generatePasswordService.encryptPassword(webSiteName);
 //		System.out.println("in the password generators");
@@ -51,9 +56,29 @@ public class GenerateController {
 		return allData;
 	}
 	
-	public WebSiteData deleteDataByName(@RequestBody WebSiteData webSiteData)
+	@DeleteMapping("/name")
+	public List<SavedEncryptedPassword>  deleteDataByName(@RequestParam("websiteName") String websiteName) throws AllCompanyNotFoundException
 	{
-		return null;
+		System.out.println("In the deletion controller");
+		String response =generatePasswordService.deleteByWebSiteName(websiteName);
+		System.out.println(response);
+		if(response.equals("1"))
+		{
+			System.out.println("in the if condition");
+			List<SavedEncryptedPassword>  allData=generatePasswordService.getAllData();
+			System.out.println(allData);
+			return allData;
+		}
+	   return null;
+	}
+	
+	@PatchMapping("/data")
+	public SavedEncryptedPassword updateData(@RequestBody SavedEncryptedPassword password) throws AllCompanyNotFoundException
+	{
+		System.out.println("in the update");
+		String id=password.getId();
+		SavedEncryptedPassword obtainedPassword=generatePasswordService.updateData(password,id);
+		return obtainedPassword;
 	}
 	
 

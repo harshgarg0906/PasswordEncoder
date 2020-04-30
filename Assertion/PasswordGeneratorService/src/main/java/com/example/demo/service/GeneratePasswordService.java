@@ -1,6 +1,9 @@
 package com.example.demo.service;
 
 import java.util.List;
+import java.util.Optional;
+
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,6 +14,7 @@ import com.example.demo.repo.DatabaseSavePassword;
 import com.example.demo.util.AES;
 
 @Service
+@Transactional
 public class GeneratePasswordService {
 
 	@Autowired
@@ -38,5 +42,31 @@ public class GeneratePasswordService {
 			throw new AllCompanyNotFoundException("No Company Exist");
 		}
 		return allData;
+	}
+	
+	public String deleteByWebSiteName(String webSiteName)
+	{
+		String response=databaseSavePassword.deleteByWebSiteName(webSiteName);
+		System.out.println(response);
+		return response;
+	}
+
+	public SavedEncryptedPassword updateData(SavedEncryptedPassword password, String id) throws AllCompanyNotFoundException {
+		Optional<SavedEncryptedPassword> obtainedData=databaseSavePassword.findById(id);
+		System.out.println(obtainedData.get());
+		if(obtainedData.isPresent())
+		{
+			System.out.println("in the if condition");
+			SavedEncryptedPassword retriveData=obtainedData.get();
+			retriveData.setEncryptedpassword(password.getEncryptedpassword());
+			retriveData.setWebSiteName(password.getWebSiteName());
+			databaseSavePassword.save(retriveData);
+			return retriveData;
+		}
+		else
+		{
+			throw new AllCompanyNotFoundException("No data Exist");
+		}
+		
 	}
 }

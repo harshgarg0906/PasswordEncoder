@@ -5,12 +5,14 @@ import { GeneratepasswordComponent } from './generatepassword/generatepassword.c
 import { MaterialModule } from '../shared/material.module';
 import { FlexLayoutModule } from "@angular/flex-layout";
 import {ReactiveFormsModule,FormsModule}  from '@angular/forms';
-import { AllcompanyComponent } from './allcompany/allcompany.component'
+import { AllcompanyComponent } from './allcompany/allcompany.component';
+import { UpdatepasswordComponent } from './updatepassword/updatepassword.component'
 
 @NgModule({
   declarations: [
       GeneratepasswordComponent,
-      AllcompanyComponent
+      AllcompanyComponent,
+      UpdatepasswordComponent
   ],
   imports: [
     CommonModule,
