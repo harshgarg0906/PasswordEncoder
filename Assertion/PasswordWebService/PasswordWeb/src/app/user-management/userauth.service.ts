@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { UserData } from './login/login.component';
-import { throwError } from 'rxjs';
+import { throwError, BehaviorSubject } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 export interface LoginResponsse
@@ -15,7 +15,7 @@ export interface LoginResponsse
 export class UserauthService {
 
   constructor(private http:HttpClient) { }
-  
+  public loginBehaviorSubject=new BehaviorSubject<boolean>(null);
   onLogin(form:UserData)
   {  
       return this.http.post<LoginResponsse>(`http://localhost:8765/user/auth/login`,form)
@@ -39,6 +39,16 @@ export class UserauthService {
 
       }
     )
+  }
+
+  setLoginBehaviourSubject(data:boolean)
+  {
+    this.loginBehaviorSubject.next(data);
+  }
+
+  getLoginBehaviourSubject()
+  {
+    return this.loginBehaviorSubject.asObservable();
   }
   
 }

@@ -30,8 +30,17 @@ public class GeneratePasswordService {
 	
 	public String saveEncryptedPassword(SavedEncryptedPassword password)
 	{
-		  databaseSavePassword.save(password);
-		  return "data saved succesfuly";
+		 SavedEncryptedPassword savedEncryptedPassword= databaseSavePassword.findByWebSiteName(password.getWebSiteName());
+		 if(savedEncryptedPassword!=null)
+		 {
+			 return "data exist";
+		 }
+		 else
+		 {
+			 databaseSavePassword.save(password);
+			  return "data saved succesfuly";
+		 }
+		  
 	}
 	
 	public List<SavedEncryptedPassword> getAllData() throws AllCompanyNotFoundException
@@ -61,6 +70,8 @@ public class GeneratePasswordService {
 			retriveData.setEncryptedpassword(password.getEncryptedpassword());
 			retriveData.setWebSiteName(password.getWebSiteName());
 			databaseSavePassword.save(retriveData);
+			System.out.println("After the saving");
+			System.out.println(retriveData);
 			return retriveData;
 		}
 		else

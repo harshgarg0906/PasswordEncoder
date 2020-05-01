@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 import java.util.UUID;
@@ -45,7 +46,18 @@ public class GenerateController {
          System.out.println(password);
 		String response=generatePasswordService.saveEncryptedPassword(password);
 		System.out.println(response);
-		return password;
+		if(response.equals("data exist"))
+		{
+			password.setDuplicate(true);
+			return password;
+		}
+		else
+		{
+			password.setDuplicate(false);
+			return password;
+		}
+		
+		
 	}
 	
 	@GetMapping("/data")
@@ -77,6 +89,7 @@ public class GenerateController {
 	{
 		System.out.println("in the update");
 		String id=password.getId();
+		System.out.println(id);
 		SavedEncryptedPassword obtainedPassword=generatePasswordService.updateData(password,id);
 		return obtainedPassword;
 	}

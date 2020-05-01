@@ -5,9 +5,9 @@
      <p fxFlex>Foodie</p>
      <i class="material-icons" (click)="onClick()">perm_contact_calendar</i> -->
          <div fxLayout="row" fxLayoutGap="50px">
-              <a routerLink="/login">Login</a>
-              <a routerLink="/password">Password</a>
-              <a routerLink="/allcompany">List</a>
+              <a routerLink="/login" *ngIf="!isLogin">Login</a>
+              <a routerLink="/password"  *ngIf="isLogin">Password</a>
+              <a routerLink="/allcompany"  *ngIf="isLogin">List</a>
          </div>
     
     </div>

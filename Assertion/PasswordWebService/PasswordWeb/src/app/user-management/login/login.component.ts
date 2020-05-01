@@ -41,6 +41,7 @@ export class LoginComponent implements OnInit {
       console.log(data)
       if(data.statusCode=='200')
       {
+        this.userAuthService.setLoginBehaviourSubject(true);
         this.route.navigate(['/password'])
       }
       if(data.statusCode==203)

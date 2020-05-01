@@ -4,7 +4,8 @@ import { Subject, Subscription, Observable, BehaviorSubject } from 'rxjs';
 export interface EncryptedPassword{
   id?:string
   encryptedpassword:string;
-  webSiteName:string
+  webSiteName:string;
+  duplicate?: boolean
 }
 @Injectable({
   providedIn: 'root'
@@ -23,7 +24,7 @@ export class WebPasswordService {
   savePassword(data)
   {
     console.log('in the save service')
-    return this.http.post('http://localhost:8765/generate/save',data)
+    return this.http.post<EncryptedPassword>('http://localhost:8765/generate/save',data)
   }
 
   getAllData()
@@ -53,5 +54,10 @@ export class WebPasswordService {
   getUpdate():Observable<EncryptedPassword>{
     console.log('in the getUpdate')
     return this.updateSubject.asObservable();
+  }
+
+  updateWebsiteData(data:EncryptedPassword)
+  {
+      return this.http.patch('http://localhost:8765/generate/data',data);
   }
 }

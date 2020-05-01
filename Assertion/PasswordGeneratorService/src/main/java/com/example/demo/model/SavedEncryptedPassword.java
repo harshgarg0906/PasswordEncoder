@@ -11,6 +11,7 @@ public class SavedEncryptedPassword {
 	String id;
 	String encryptedpassword;
 	String webSiteName;
+	Boolean duplicate;
 
 	public SavedEncryptedPassword()
 	{
@@ -47,6 +48,15 @@ public class SavedEncryptedPassword {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+ 
+	
+	public Boolean getDuplicate() {
+		return duplicate;
+	}
+
+	public void setDuplicate(Boolean duplicate) {
+		this.duplicate = duplicate;
 	}
 
 	@Override

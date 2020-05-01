@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { WebPasswordService, EncryptedPassword } from '../web-password.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 export interface PasswordData{
   webSiteName:string
@@ -12,7 +13,7 @@ export interface PasswordData{
 })
 export class GeneratepasswordComponent implements OnInit {
 
-  constructor(private passwordService:WebPasswordService) { }
+  constructor(private passwordService:WebPasswordService,private _snackBar: MatSnackBar) { }
 
   generatePassword:FormGroup;
   webSiteData:PasswordData={
@@ -50,13 +51,36 @@ export class GeneratepasswordComponent implements OnInit {
 
   onSave()
   {
+    this.obtained=false;
     console.log('In the save function')
     this.passwordService.savePassword(this.savedData).subscribe(
       (data)=>{
+        if(data.duplicate==true)
+        {
+          this._snackBar.open("Data Exist", "Already", {
+            duration: 2000,
+          });
+        }
+        else
+        {
+          this._snackBar.open("Data Saved", "Succefuly", {
+            duration: 2000,
+          });        
+        }
+
         console.log('After the saving')
-        console.log(data)
+          console.log(data)
+       
       }
     );;
+    this.generatePassword.reset();
+  }
+
+  onCancel()
+  {
+    console.log('in the cancel')
+    this.obtained=false;
+    this.generatePassword.reset();
   }
 
 }
