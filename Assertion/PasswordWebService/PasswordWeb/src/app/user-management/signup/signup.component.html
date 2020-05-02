@@ -1,1 +1,24 @@
-<p>signup works!</p>
+
+<form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
+    <div fxLayout="column" class="alignitem">
+       <mat-form-field class="example-full-width">
+        <mat-label>PSID</mat-label>
+        <input matInput formControlName="psid" placeholder="123" type="number">
+      </mat-form-field>
+  
+      <mat-form-field class="example-full-width">
+          <mat-label>PASSWORD</mat-label>
+          <input matInput  formControlName="password" placeholder="password" type="password" >
+      </mat-form-field> 
+
+      <mat-form-field class="example-full-width">
+        <mat-label>EMAIL</mat-label>
+        <input matInput  formControlName="email" placeholder="xyz@mail.com" type="text" >
+    </mat-form-field> 
+    </div>
+  
+    <div class="alignitem1" fxLayout  fxLayoutGap="10px">
+      <button mat-raised-button color="primary">SIGNUP</button>
+     </div> 
+   
+</form>

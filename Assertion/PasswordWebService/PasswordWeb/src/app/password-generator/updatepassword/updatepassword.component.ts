@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { PasswordData } from '../generatepassword/generatepassword.component';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import { UserauthService } from 'src/app/user-management/userauth.service';
 @Component({
   selector: 'app-updatepassword',
   templateUrl: './updatepassword.component.html',
@@ -13,7 +14,7 @@ export class UpdatepasswordComponent implements OnInit,OnDestroy {
 
   generatePassword:FormGroup;
 
-  constructor(private passworsService:WebPasswordService,private _snackBar: MatSnackBar) { }
+  constructor(private passworsService:WebPasswordService,private _snackBar: MatSnackBar,private userAuthService:UserauthService) { }
   updateSubject:Subscription;
   savedData:EncryptedPassword={
     encryptedpassword:"",
@@ -25,6 +26,7 @@ export class UpdatepasswordComponent implements OnInit,OnDestroy {
   obtainedPassword:string='';
   obtained:boolean=false;
   dataGenerated:EncryptedPassword;
+  psid:string;
   ngOnInit(): void {
     this.generatePassword=new FormGroup({
       'websitename':new FormControl(null,[Validators.required])
@@ -35,6 +37,11 @@ export class UpdatepasswordComponent implements OnInit,OnDestroy {
         'websitename':data.webSiteName
       })
     })
+
+    this.userAuthService.getPsidBehaviourSubject().subscribe((data)=>{
+      this.psid=data;
+    })
+
   
   }
 
@@ -56,7 +63,7 @@ export class UpdatepasswordComponent implements OnInit,OnDestroy {
     this.obtained=false;
      this.dataGenerated.webSiteName=this.generatePassword.value.websitename;
      this.dataGenerated.encryptedpassword=this.savedData.encryptedpassword;
-    this.passworsService.updateWebsiteData(this.dataGenerated).subscribe((data)=>{
+    this.passworsService.updateWebsiteData(this.dataGenerated,this.psid).subscribe((data)=>{
       this._snackBar.open("Data Updated", "Succesfully", {
         duration: 2000,
       });

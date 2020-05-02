@@ -39,7 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		System.out.println("in web security");
 		webSecurity.ignoring().antMatchers("/","/assets/**", "/*.js", "/*.css","/*.eot", "/*.svg" ,"/*.woff2" ,"/*.ttf" ,"/*.woff" ,"/*.jpg",
 				"/*.html" ,"/*.scss" ,"/*.png" ,"/*.ico","/*.js" , "/*.bootstrap.min.css"
-				,"password-web-app/**","/user/auth/login","/user/auth/success","/user/auth/failure","/user/auth/invalid");
+				,"password-web-app/**","/user/auth/login","/user/auth/success","/user/auth/failure","/user/auth/invalid","/user/signup");
 		
 		
 	}

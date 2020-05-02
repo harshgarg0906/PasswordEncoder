@@ -5,7 +5,8 @@ export interface EncryptedPassword{
   id?:string
   encryptedpassword:string;
   webSiteName:string;
-  duplicate?: boolean
+  duplicate?: boolean;
+  psid?:string;
 }
 @Injectable({
   providedIn: 'root'
@@ -21,21 +22,31 @@ export class WebPasswordService {
     return this.http.post<EncryptedPassword>('http://localhost:8765/generate/password',data);
   }
 
-  savePassword(data)
+  savePassword(data:EncryptedPassword)
   {
+    console.log('before sending onto database')
+    console.log(data)
     return this.http.post<EncryptedPassword>('http://localhost:8765/generate/save',data)
   }
 
-  getAllData()
+  getAllData(data:string)
   {
-    return this.http.get<EncryptedPassword[]>('http://localhost:8765/generate/data');
+    const psid:string=data
+    let psidParams=new HttpParams();
+    psidParams=psidParams.append('psid',psid)
+    return this.http.get<EncryptedPassword[]>('http://localhost:8765/generate/data',
+    {
+      params:psidParams
+    });
   }
 
-  deleteDataByWebsiteName(data:string)
+  deleteDataByWebsiteName(data:string,dataPsid:string)
   {
     const websiteName:string=data
+    const psid:string=dataPsid;
     let siteParams=new HttpParams()
     siteParams=siteParams.append('websiteName',websiteName);
+    siteParams=siteParams.append('psid',psid);
     return this.http.delete<EncryptedPassword[]>('http://localhost:8765/generate/name',{
       params:siteParams
     });
@@ -49,8 +60,13 @@ export class WebPasswordService {
     return this.updateSubject.asObservable();
   }
 
-  updateWebsiteData(data:EncryptedPassword)
+  updateWebsiteData(data:EncryptedPassword,dataPsid:string)
   {
-      return this.http.patch('http://localhost:8765/generate/data',data);
+     const psid:string=dataPsid
+     let psidParams=new HttpParams();
+     psidParams=psidParams.append('psid',psid)
+     return this.http.patch('http://localhost:8765/generate/data',data,{
+       params:psidParams
+     });
   }
 }

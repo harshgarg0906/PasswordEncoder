@@ -9,6 +9,7 @@ import javax.persistence.Id;
 public class SavedEncryptedPassword {
 	@Id
 	String id;
+	String psid;
 	String encryptedpassword;
 	String webSiteName;
 	Boolean duplicate;
@@ -58,11 +59,24 @@ public class SavedEncryptedPassword {
 	public void setDuplicate(Boolean duplicate) {
 		this.duplicate = duplicate;
 	}
+	
+	
+
+	public String getPsid() {
+		return psid;
+	}
+
+	public void setPsid(String psid) {
+		this.psid = psid;
+	}
 
 	@Override
 	public String toString() {
-		return "SavedEncryptedPassword [encryptedpassword=" + encryptedpassword + ", webSiteName=" + webSiteName + "]";
+		return "SavedEncryptedPassword [id=" + id + ", psid=" + psid + ", encryptedpassword=" + encryptedpassword
+				+ ", webSiteName=" + webSiteName + ", duplicate=" + duplicate + "]";
 	}
+
+	
 	
 	
 	

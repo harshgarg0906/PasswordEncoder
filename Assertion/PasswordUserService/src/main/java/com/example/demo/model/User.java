@@ -19,6 +19,7 @@ public class User {
 	}
 	private UserRole userRole;
 	private Boolean userActive = false;
+	private Boolean exist;
 	
 	
 	public User() {
@@ -91,6 +92,17 @@ public class User {
 	public void setUserActive(Boolean userActive) {
 		this.userActive = userActive;
 	}
+
+
+	public Boolean getExist() {
+		return exist;
+	}
+
+
+	public void setExist(Boolean exist) {
+		this.exist = exist;
+	}
+	
 	
 	
 	

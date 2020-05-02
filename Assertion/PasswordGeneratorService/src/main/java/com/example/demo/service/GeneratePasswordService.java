@@ -34,7 +34,7 @@ public class GeneratePasswordService {
 	
 	public String saveEncryptedPassword(SavedEncryptedPassword password)
 	{
-		 SavedEncryptedPassword savedEncryptedPassword= databaseSavePassword.findByWebSiteName(password.getWebSiteName());
+		 SavedEncryptedPassword savedEncryptedPassword= databaseSavePassword.findByWebSiteNameAndPsid(password.getWebSiteName(), password.getPsid());
 		 if(savedEncryptedPassword!=null)
 		 {
 			 return "data exist";
@@ -47,9 +47,19 @@ public class GeneratePasswordService {
 		  
 	}
 	
-	public List<SavedEncryptedPassword> getAllData() throws AllCompanyNotFoundException
+//	public List<SavedEncryptedPassword> getAllData() throws AllCompanyNotFoundException
+//	{
+//		List<SavedEncryptedPassword> allData=databaseSavePassword.findAll();
+//		if(allData.isEmpty())
+//		{
+//			throw new AllCompanyNotFoundException("No Company Exist");
+//		}
+//		return allData;
+//	}
+	
+	public List<SavedEncryptedPassword> getAllData(String psid) throws AllCompanyNotFoundException
 	{
-		List<SavedEncryptedPassword> allData=databaseSavePassword.findAll();
+		List<SavedEncryptedPassword> allData=databaseSavePassword.findAllByPsid(psid);
 		if(allData.isEmpty())
 		{
 			throw new AllCompanyNotFoundException("No Company Exist");
@@ -57,15 +67,43 @@ public class GeneratePasswordService {
 		return allData;
 	}
 	
-	public String deleteByWebSiteName(String webSiteName)
+//	public String deleteByWebSiteName(String webSiteName)
+//	{
+//		String response=databaseSavePassword.deleteByWebSiteName(webSiteName);
+//		logger.info(response);
+//		return response;
+//	}
+	
+	public String deleteByWebSiteName(String webSiteName,String psid)
 	{
-		String response=databaseSavePassword.deleteByWebSiteName(webSiteName);
+		String response=databaseSavePassword.deleteByWebSiteNameAndPsid(webSiteName,psid);
 		logger.info(response);
 		return response;
 	}
 
-	public SavedEncryptedPassword updateData(SavedEncryptedPassword password, String id) throws AllCompanyNotFoundException {
-		Optional<SavedEncryptedPassword> obtainedData=databaseSavePassword.findById(id);
+//	public SavedEncryptedPassword updateData(SavedEncryptedPassword password, String id) throws AllCompanyNotFoundException {
+//		Optional<SavedEncryptedPassword> obtainedData=databaseSavePassword.findById(id);
+//		logger.info(obtainedData.get());
+//		if(obtainedData.isPresent())
+//		{
+//			logger.info("in the if condition");
+//			SavedEncryptedPassword retriveData=obtainedData.get();
+//			retriveData.setEncryptedpassword(password.getEncryptedpassword());
+//			retriveData.setWebSiteName(password.getWebSiteName());
+//			databaseSavePassword.save(retriveData);
+//			logger.info("After the saving");
+//			logger.info(retriveData);
+//			return retriveData;
+//		}
+//		else
+//		{
+//			throw new AllCompanyNotFoundException("No data Exist");
+//		}
+//		
+//	}
+	
+	public SavedEncryptedPassword updateData(SavedEncryptedPassword password, String id,String psid) throws AllCompanyNotFoundException {
+		Optional<SavedEncryptedPassword> obtainedData=databaseSavePassword.findByIdAndPsid(id,psid);
 		logger.info(obtainedData.get());
 		if(obtainedData.isPresent())
 		{

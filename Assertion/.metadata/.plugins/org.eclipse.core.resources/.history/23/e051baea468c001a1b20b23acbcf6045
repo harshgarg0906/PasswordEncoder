@@ -1,0 +1,18 @@
+package com.example.demo.service;
+
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import com.example.demo.model.User;
+
+public class SignUpService {
+
+	public User signUp(User user) {
+		// TODO Auto-generated method stub
+		String password=user.getPassword();
+		BCryptPasswordEncoder passwordEncoder=new BCryptPasswordEncoder();
+		String hashCodedPassword=passwordEncoder.encode(password);
+	    user.setPassword(hashCodedPassword);
+		return null;
+	}
+
+}

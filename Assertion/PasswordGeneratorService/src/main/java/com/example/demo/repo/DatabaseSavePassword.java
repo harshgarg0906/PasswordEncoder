@@ -1,5 +1,8 @@
 package com.example.demo.repo;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -9,4 +12,8 @@ import com.example.demo.model.SavedEncryptedPassword;
 public interface DatabaseSavePassword extends JpaRepository<SavedEncryptedPassword, String> {
       String deleteByWebSiteName(String webSiteName);
       SavedEncryptedPassword findByWebSiteName(String webSiteName);
+      List<SavedEncryptedPassword> findAllByPsid(String psid);
+      String deleteByWebSiteNameAndPsid(String webSiteName,String psid);
+      Optional<SavedEncryptedPassword> findByIdAndPsid(String id,String psid);
+      SavedEncryptedPassword findByWebSiteNameAndPsid(String webSiteName,String psid);
 }

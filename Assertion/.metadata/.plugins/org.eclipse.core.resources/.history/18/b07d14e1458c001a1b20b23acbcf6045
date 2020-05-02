@@ -1,0 +1,12 @@
+package com.example.demo.service;
+
+import com.example.demo.model.User;
+
+public class SignUpService {
+
+	public User signUp(User user) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

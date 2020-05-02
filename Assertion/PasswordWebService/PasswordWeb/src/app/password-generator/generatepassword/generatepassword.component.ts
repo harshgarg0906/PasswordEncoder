@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { WebPasswordService, EncryptedPassword } from '../web-password.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import { UserauthService } from 'src/app/user-management/userauth.service';
 
 export interface PasswordData{
   webSiteName:string
@@ -13,7 +14,7 @@ export interface PasswordData{
 })
 export class GeneratepasswordComponent implements OnInit {
 
-  constructor(private passwordService:WebPasswordService,private _snackBar: MatSnackBar) { }
+  constructor(private passwordService:WebPasswordService,private _snackBar: MatSnackBar,private userAuthService:UserauthService) { }
 
   generatePassword:FormGroup;
   webSiteData:PasswordData={
@@ -21,13 +22,18 @@ export class GeneratepasswordComponent implements OnInit {
   };
   savedData:EncryptedPassword={
     encryptedpassword:"",
-    webSiteName:""
+    webSiteName:"",
+    psid:""
   }
   obtainedPassword:string='';
   obtained:boolean=false;
+  psid:string
   ngOnInit(): void {
     this.generatePassword=new FormGroup({
       'websitename':new FormControl(null,[Validators.required])
+    })
+    this.userAuthService.getPsidBehaviourSubject().subscribe((data)=>{
+      this.psid=data
     })
   }
 
@@ -37,8 +43,6 @@ export class GeneratepasswordComponent implements OnInit {
     this.passwordService.getPassword(this.webSiteData).subscribe(
       (data)=>{
         this.savedData=data;
-        console.log('After')
-        console.log(this.savedData)
         this.obtained=true;
         this.obtainedPassword=data.encryptedpassword;
       }
@@ -49,6 +53,7 @@ export class GeneratepasswordComponent implements OnInit {
   onSave()
   {
     this.obtained=false;
+    this.savedData.psid=this.psid;
     this.passwordService.savePassword(this.savedData).subscribe(
       (data)=>{
         if(data.duplicate==true)

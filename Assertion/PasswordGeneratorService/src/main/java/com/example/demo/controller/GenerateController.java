@@ -62,37 +62,74 @@ public class GenerateController {
 		
 	}
 	
+//	@GetMapping("/data")
+//	List<SavedEncryptedPassword>  getAllData() throws AllCompanyNotFoundException
+//	{
+//		logger.info("Getting all the data");
+//		List<SavedEncryptedPassword>  allData=generatePasswordService.getAllData();
+//		return allData;
+//	}
+	
 	@GetMapping("/data")
-	List<SavedEncryptedPassword>  getAllData() throws AllCompanyNotFoundException
+	List<SavedEncryptedPassword>  getAllData(@RequestParam String psid) throws AllCompanyNotFoundException
 	{
 		logger.info("Getting all the data");
-		List<SavedEncryptedPassword>  allData=generatePasswordService.getAllData();
+		List<SavedEncryptedPassword>  allData=generatePasswordService.getAllData(psid);
 		return allData;
 	}
 	
+//	@DeleteMapping("/name")
+//	public List<SavedEncryptedPassword>  deleteDataByName(@RequestParam("websiteName") String websiteName) throws AllCompanyNotFoundException
+//	{
+//		logger.info("In the deletion controller");
+//		String response =generatePasswordService.deleteByWebSiteName(websiteName);
+//		logger.info(response);
+//		if(response.equals("1"))
+//		{
+//			logger.info("in the if condition");
+//			List<SavedEncryptedPassword>  allData=generatePasswordService.getAllData();
+//			logger.info(allData);
+//			return allData;
+//		}
+//	   return null;
+//	}
+	
+	
 	@DeleteMapping("/name")
-	public List<SavedEncryptedPassword>  deleteDataByName(@RequestParam("websiteName") String websiteName) throws AllCompanyNotFoundException
+	public List<SavedEncryptedPassword>  deleteDataByName(@RequestParam("websiteName") String websiteName,@RequestParam String psid) throws AllCompanyNotFoundException
 	{
 		logger.info("In the deletion controller");
-		String response =generatePasswordService.deleteByWebSiteName(websiteName);
+		String response =generatePasswordService.deleteByWebSiteName(websiteName,psid);
 		logger.info(response);
 		if(response.equals("1"))
 		{
 			logger.info("in the if condition");
-			List<SavedEncryptedPassword>  allData=generatePasswordService.getAllData();
+			List<SavedEncryptedPassword>  allData=generatePasswordService.getAllData(psid);
 			logger.info(allData);
 			return allData;
 		}
 	   return null;
 	}
 	
+	
+	
+//	@PatchMapping("/data")
+//	public SavedEncryptedPassword updateData(@RequestBody SavedEncryptedPassword password) throws AllCompanyNotFoundException
+//	{
+//		logger.info("in the update");
+//		String id=password.getId();
+//		logger.info(id);
+//		SavedEncryptedPassword obtainedPassword=generatePasswordService.updateData(password,id);
+//		return obtainedPassword;
+//	}
+	
 	@PatchMapping("/data")
-	public SavedEncryptedPassword updateData(@RequestBody SavedEncryptedPassword password) throws AllCompanyNotFoundException
+	public SavedEncryptedPassword updateData(@RequestBody SavedEncryptedPassword password,@RequestParam String psid) throws AllCompanyNotFoundException
 	{
 		logger.info("in the update");
 		String id=password.getId();
 		logger.info(id);
-		SavedEncryptedPassword obtainedPassword=generatePasswordService.updateData(password,id);
+		SavedEncryptedPassword obtainedPassword=generatePasswordService.updateData(password,id,psid);
 		return obtainedPassword;
 	}
 	

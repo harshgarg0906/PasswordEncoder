@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 export interface UserData{
   psid:string
   password:string
+  email?:string
 }
 
 @Component({
@@ -41,6 +42,7 @@ export class LoginComponent implements OnInit {
       if(data.statusCode=='200')
       {
         this.userAuthService.setLoginBehaviourSubject(true);
+        this.userAuthService.setPsidBehaviourSubject(this.loginForm.value.psid)
         this.route.navigate(['/password'])
       }
       if(data.statusCode==203)
@@ -66,5 +68,6 @@ export class LoginComponent implements OnInit {
  {
    this.wrongPassword=false;
    this.wrongCredentials=false;
+   this.route.navigate(['/signup'])
  }
 }

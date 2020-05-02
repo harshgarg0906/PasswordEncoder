@@ -5,6 +5,8 @@ import {MatTableDataSource} from '@angular/material/table';
 import {PasswordData} from '../generatepassword/generatepassword.component'
 import { Router } from '@angular/router';
 import { MatSort } from '@angular/material/sort';
+import { UserauthService } from 'src/app/user-management/userauth.service';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-allcompany',
   templateUrl: './allcompany.component.html',
@@ -13,15 +15,19 @@ import { MatSort } from '@angular/material/sort';
 
 
 
-export class AllcompanyComponent implements OnInit {
+export class AllcompanyComponent implements OnInit,OnDestroy {
   displayedColumns: string[] = ['encryptedpassword', 'webSiteName','edit','delete'];
   dataSource = new MatTableDataSource<EncryptedPassword>(emptyData);
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-
-  constructor(private passwordService:WebPasswordService,private router:Router){}
+   psid:string;
+   psidSubscription:Subscription;
+  constructor(private passwordService:WebPasswordService,private router:Router,private userAuthService:UserauthService){}
   ngOnInit() {
-      this.passwordService.getAllData().subscribe((data)=>{
+     this.psidSubscription= this.userAuthService.getPsidBehaviourSubject().subscribe((data)=>{
+        this.psid=data;
+      });
+      this.passwordService.getAllData(this.psid).subscribe((data)=>{
       this.dataSource= new MatTableDataSource(data);
     
     })
@@ -44,7 +50,8 @@ export class AllcompanyComponent implements OnInit {
   onDelete(data)
    {
     this.webSiteData.webSiteName=data;
-    this.passwordService.deleteDataByWebsiteName(data).subscribe((data)=>{
+    console.log(this.psid);
+    this.passwordService.deleteDataByWebsiteName(data,this.psid).subscribe((data)=>{
       this.dataSource= new MatTableDataSource(data);
       if(data==null)
       {
@@ -79,6 +86,7 @@ export class AllcompanyComponent implements OnInit {
    }
    ngOnDestroy()
    {
+     this.psidSubscription.unsubscribe();
    }
 }
 const emptyData:EncryptedPassword[]=[{encryptedpassword:'',webSiteName:'',id:''}]
