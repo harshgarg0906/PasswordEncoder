@@ -1,5 +1,7 @@
 package com.example.demo.controller;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 
@@ -23,16 +25,16 @@ import com.example.demo.service.GeneratePasswordService;
 @RestController
 public class GenerateController {
 	
+	private final static Logger logger=LogManager.getLogger(GenerateController.class);
+	
 	@Autowired
 	GeneratePasswordService generatePasswordService;
 	@PostMapping("/password")
 	public EncryptedPassword getPassword(@RequestBody WebSiteData websiteData)
 	{
-		System.out.println("in the password generator");
+		logger.info("in the password generator");
 		String webSiteName=websiteData.getWebSiteName();
 		String encryptedPasswordObtained=generatePasswordService.encryptPassword(webSiteName);
-//		System.out.println("in the password generators");
-//		System.out.println(encryptedPasswordObtained);
 		EncryptedPassword encryptedPassword=new EncryptedPassword(encryptedPasswordObtained,webSiteName);
 		return encryptedPassword;
 	}
@@ -40,12 +42,12 @@ public class GenerateController {
 	@PostMapping("/save")
 	public SavedEncryptedPassword savePassword(@RequestBody SavedEncryptedPassword password)
 	{
-		System.out.println("Saving the password");
+		logger.info("Saving the password");
 		String id = UUID.randomUUID().toString();
          password.setId(id);
-         System.out.println(password);
-		String response=generatePasswordService.saveEncryptedPassword(password);
-		System.out.println(response);
+         logger.info(password);
+		 String response=generatePasswordService.saveEncryptedPassword(password);
+		logger.info(response);
 		if(response.equals("data exist"))
 		{
 			password.setDuplicate(true);
@@ -63,7 +65,7 @@ public class GenerateController {
 	@GetMapping("/data")
 	List<SavedEncryptedPassword>  getAllData() throws AllCompanyNotFoundException
 	{
-		System.out.println("Getting all the data");
+		logger.info("Getting all the data");
 		List<SavedEncryptedPassword>  allData=generatePasswordService.getAllData();
 		return allData;
 	}
@@ -71,14 +73,14 @@ public class GenerateController {
 	@DeleteMapping("/name")
 	public List<SavedEncryptedPassword>  deleteDataByName(@RequestParam("websiteName") String websiteName) throws AllCompanyNotFoundException
 	{
-		System.out.println("In the deletion controller");
+		logger.info("In the deletion controller");
 		String response =generatePasswordService.deleteByWebSiteName(websiteName);
-		System.out.println(response);
+		logger.info(response);
 		if(response.equals("1"))
 		{
-			System.out.println("in the if condition");
+			logger.info("in the if condition");
 			List<SavedEncryptedPassword>  allData=generatePasswordService.getAllData();
-			System.out.println(allData);
+			logger.info(allData);
 			return allData;
 		}
 	   return null;
@@ -87,9 +89,9 @@ public class GenerateController {
 	@PatchMapping("/data")
 	public SavedEncryptedPassword updateData(@RequestBody SavedEncryptedPassword password) throws AllCompanyNotFoundException
 	{
-		System.out.println("in the update");
+		logger.info("in the update");
 		String id=password.getId();
-		System.out.println(id);
+		logger.info(id);
 		SavedEncryptedPassword obtainedPassword=generatePasswordService.updateData(password,id);
 		return obtainedPassword;
 	}

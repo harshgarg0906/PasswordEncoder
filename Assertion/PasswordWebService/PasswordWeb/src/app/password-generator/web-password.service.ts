@@ -23,7 +23,6 @@ export class WebPasswordService {
 
   savePassword(data)
   {
-    console.log('in the save service')
     return this.http.post<EncryptedPassword>('http://localhost:8765/generate/save',data)
   }
 
@@ -34,12 +33,9 @@ export class WebPasswordService {
 
   deleteDataByWebsiteName(data:string)
   {
-    console.log('in the delete service')
-    console.log(data)
     const websiteName:string=data
     let siteParams=new HttpParams()
     siteParams=siteParams.append('websiteName',websiteName);
-    console.log(siteParams)
     return this.http.delete<EncryptedPassword[]>('http://localhost:8765/generate/name',{
       params:siteParams
     });
@@ -47,12 +43,9 @@ export class WebPasswordService {
 
   setUpdate(data)
   {
-    console.log("in the update")
-    console.log(data)
     this.updateSubject.next(data)
   }
   getUpdate():Observable<EncryptedPassword>{
-    console.log('in the getUpdate')
     return this.updateSubject.asObservable();
   }
 

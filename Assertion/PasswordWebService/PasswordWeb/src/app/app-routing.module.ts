@@ -4,6 +4,7 @@ import { UserAuthModule } from './user-management/user-auth.module';
 import { WebPasswordModule } from './password-generator/web-password.module';
 import { AllcompanyComponent } from './password-generator/allcompany/allcompany.component';
 import { UpdatepasswordComponent } from './password-generator/updatepassword/updatepassword.component';
+import { SignupComponent } from './user-management/signup/signup.component';
 
 
 
@@ -13,7 +14,8 @@ const routes: Routes = [
   {path:'login',loadChildren:'./user-management/user-auth.module#UserAuthModule'},
   {path:'password',loadChildren:'./password-generator/web-password.module#WebPasswordModule'},
   {path:'allcompany',component:AllcompanyComponent},
-  {path:'update/:id',component:UpdatepasswordComponent}
+  {path:'update/:id',component:UpdatepasswordComponent},
+  {path:'signup',component:SignupComponent}
 
 ];
 

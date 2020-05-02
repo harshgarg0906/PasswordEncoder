@@ -8,6 +8,7 @@
               <a routerLink="/login" *ngIf="!isLogin">Login</a>
               <a routerLink="/password"  *ngIf="isLogin">Password</a>
               <a routerLink="/allcompany"  *ngIf="isLogin">List</a>
+              <a *ngIf="isLogin" (click)=onLogout()>Logout</a>
          </div>
     
     </div>

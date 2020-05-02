@@ -34,11 +34,8 @@ export class GeneratepasswordComponent implements OnInit {
   onSubmit()
   {
     this.webSiteData.webSiteName=this.generatePassword.value.websitename;
-    console.log(this.webSiteData)
     this.passwordService.getPassword(this.webSiteData).subscribe(
       (data)=>{
-        console.log('Password generator function')
-        console.log(data)
         this.savedData=data;
         console.log('After')
         console.log(this.savedData)
@@ -52,7 +49,6 @@ export class GeneratepasswordComponent implements OnInit {
   onSave()
   {
     this.obtained=false;
-    console.log('In the save function')
     this.passwordService.savePassword(this.savedData).subscribe(
       (data)=>{
         if(data.duplicate==true)
@@ -67,9 +63,6 @@ export class GeneratepasswordComponent implements OnInit {
             duration: 2000,
           });        
         }
-
-        console.log('After the saving')
-          console.log(data)
        
       }
     );;
@@ -78,7 +71,6 @@ export class GeneratepasswordComponent implements OnInit {
 
   onCancel()
   {
-    console.log('in the cancel')
     this.obtained=false;
     this.generatePassword.reset();
   }

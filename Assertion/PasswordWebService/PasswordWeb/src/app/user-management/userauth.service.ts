@@ -21,8 +21,6 @@ export class UserauthService {
       return this.http.post<LoginResponsse>(`http://localhost:8765/user/auth/login`,form)
       .pipe(catchError(errorRes=>{
         let errorMessage='';
-        console.log('in the errrorr message')
-        console.log(errorRes)
         if(errorRes.status==404)
         {
           errorMessage="PSID Not Found"
@@ -33,7 +31,6 @@ export class UserauthService {
 
   getData()
   {
-    console.log('in the get service')
     this.http.get('http://localhost:8765/user/auth/data').subscribe(
       (data)=>{
 
@@ -49,6 +46,12 @@ export class UserauthService {
   getLoginBehaviourSubject()
   {
     return this.loginBehaviorSubject.asObservable();
+  }
+
+
+  logout()
+  {
+    return this.http.get(`http://localhost:8765/user/auth/logout`);
   }
   
 }

@@ -21,18 +21,11 @@ export class AllcompanyComponent implements OnInit {
 
   constructor(private passwordService:WebPasswordService,private router:Router){}
   ngOnInit() {
-  
-        console.log('in the init')
-   // this.dataSource.paginator=this.paginator;
       this.passwordService.getAllData().subscribe((data)=>{
-      console.log('in the get subscription')
-      console.log(data);
       this.dataSource= new MatTableDataSource(data);
     
     })
     this.dataSource.paginator = this.paginator;
-  //   this.dataSource=new MatTableDataSource(resultData);
-  //  this.dataSource.paginator = this.paginator;
   }
   resultData: EncryptedPassword ={encryptedpassword:'',webSiteName:'',id:''};
     webSiteData:PasswordData={
@@ -50,12 +43,8 @@ export class AllcompanyComponent implements OnInit {
 
   onDelete(data)
    {
-    console.log('in the delete function')
-    console.log(data)
     this.webSiteData.webSiteName=data;
     this.passwordService.deleteDataByWebsiteName(data).subscribe((data)=>{
-      console.log('after the deletion')
-      console.log(data)
       this.dataSource= new MatTableDataSource(data);
       if(data==null)
       {
@@ -81,9 +70,6 @@ export class AllcompanyComponent implements OnInit {
                break;
           }
         }
-        // console.log(id)
-        // console.log(encryptedpassword)
-        // console.log(webSiteName)
         this.resultData.encryptedpassword=encryptedpassword;
         this.resultData.webSiteName=webSiteName;
         this.resultData.id=id;
@@ -95,4 +81,4 @@ export class AllcompanyComponent implements OnInit {
    {
    }
 }
-const emptyData:EncryptedPassword[]=[{encryptedpassword:'e',webSiteName:'fwewe',id:'1'}]
+const emptyData:EncryptedPassword[]=[{encryptedpassword:'',webSiteName:'',id:''}]

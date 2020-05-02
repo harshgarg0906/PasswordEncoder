@@ -5,9 +5,12 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.controller.GenerateController;
 import com.example.demo.exception.AllCompanyNotFoundException;
 import com.example.demo.model.SavedEncryptedPassword;
 import com.example.demo.repo.DatabaseSavePassword;
@@ -17,6 +20,7 @@ import com.example.demo.util.AES;
 @Transactional
 public class GeneratePasswordService {
 
+	private final static Logger logger=LogManager.getLogger(GeneratePasswordService.class);
 	@Autowired
     DatabaseSavePassword databaseSavePassword;
 	
@@ -56,22 +60,22 @@ public class GeneratePasswordService {
 	public String deleteByWebSiteName(String webSiteName)
 	{
 		String response=databaseSavePassword.deleteByWebSiteName(webSiteName);
-		System.out.println(response);
+		logger.info(response);
 		return response;
 	}
 
 	public SavedEncryptedPassword updateData(SavedEncryptedPassword password, String id) throws AllCompanyNotFoundException {
 		Optional<SavedEncryptedPassword> obtainedData=databaseSavePassword.findById(id);
-		System.out.println(obtainedData.get());
+		logger.info(obtainedData.get());
 		if(obtainedData.isPresent())
 		{
-			System.out.println("in the if condition");
+			logger.info("in the if condition");
 			SavedEncryptedPassword retriveData=obtainedData.get();
 			retriveData.setEncryptedpassword(password.getEncryptedpassword());
 			retriveData.setWebSiteName(password.getWebSiteName());
 			databaseSavePassword.save(retriveData);
-			System.out.println("After the saving");
-			System.out.println(retriveData);
+			logger.info("After the saving");
+			logger.info(retriveData);
 			return retriveData;
 		}
 		else

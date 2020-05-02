@@ -38,7 +38,6 @@ export class LoginComponent implements OnInit {
    this.data.password=this.loginForm.value.password;
    this.userAuthService.onLogin(this.data).subscribe(
     (data)=>{
-      console.log(data)
       if(data.statusCode=='200')
       {
         this.userAuthService.setLoginBehaviourSubject(true);
@@ -60,7 +59,6 @@ export class LoginComponent implements OnInit {
  }
  onClick()
  {
-   console.log('functionin the clicl ')
    this.userAuthService.getData();
  }
 

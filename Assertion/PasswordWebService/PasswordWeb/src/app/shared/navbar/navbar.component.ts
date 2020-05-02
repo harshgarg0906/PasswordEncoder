@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserauthService } from 'src/app/user-management/userauth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -8,25 +9,30 @@ import { UserauthService } from 'src/app/user-management/userauth.service';
 })
 export class NavbarComponent implements OnInit {
 
-  constructor(private userAuthService:UserauthService) { }
+  constructor(private userAuthService:UserauthService,private router:Router) { }
   isLogin:boolean=false;
   ngOnInit(): void {
 
     this.userAuthService.getLoginBehaviourSubject().subscribe((data)=>{
-      console.log('inside the login')
-      console.log('hello')
-      console.log(data)
        if(data===null)
        {
-         console.log('if condition false')
          this.isLogin=false;
        }
        else if(data!=null)
-       { console.log('if condituon')
+       {
          this.isLogin=true;
        }
-       console.log(this.isLogin)
     })
+  }
+
+  onLogout()
+  {
+    this.userAuthService.logout().subscribe((data)=>{
+      console.log('logout succesfule')
+      console.log(data)
+      this.isLogin=false;
+      this.router.navigate(['/login']);
+    });
   }
 
 }
