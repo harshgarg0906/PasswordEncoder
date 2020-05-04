@@ -27,7 +27,6 @@ public class PasswordUserServiceApplication {
 	@PostConstruct
 	public void initData()
 	{
-		System.out.println("in the init method");
 		List<User> list=new ArrayList<>();
 		list.add(new User("10", "harsh@gmail.com", "$2a$10$PKfZwfXcVO6oCsNyelU5W.YQJPl5l8gzOqM2YrzvNnBOXld5JPKnW", UserRole.USER, true));
 		list.add(new User("11", "rahul@gmail.com", "$2a$10$PKfZwfXcVO6oCsNyelU5W.YQJPl5l8gzOqM2YrzvNnBOXld5JPKnW", UserRole.USER, true));

@@ -16,9 +16,7 @@ public class SignupController {
 	@PostMapping("/signup")
 	public User signUp(@RequestBody User user)
 	{
-		System.out.println("in the signup");
 		User responeUser=signUpService.signUp(user);
-		System.out.println(responeUser);
 		return user;
 	}
 }

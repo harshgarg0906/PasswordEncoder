@@ -19,10 +19,10 @@ public class SavedEncryptedPassword {
 		
 	}
 
-	public SavedEncryptedPassword(String encryptedpassword, String webSiteName,String id) {
+	public SavedEncryptedPassword(String encryptedpassword, String webSiteName,String psid) {
 		this.encryptedpassword = encryptedpassword;
 		this.webSiteName = webSiteName;
-		this.id=id;
+		this.psid=psid;
 	}
 
 	public String getEncryptedpassword() {

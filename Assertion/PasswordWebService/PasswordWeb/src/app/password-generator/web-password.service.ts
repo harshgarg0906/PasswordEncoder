@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams} from '@angular/common/http';
-import { Subject, Subscription, Observable, BehaviorSubject } from 'rxjs';
+import {  Observable, BehaviorSubject, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 export interface EncryptedPassword{
   id?:string
   encryptedpassword:string;
@@ -24,8 +25,6 @@ export class WebPasswordService {
 
   savePassword(data:EncryptedPassword)
   {
-    console.log('before sending onto database')
-    console.log(data)
     return this.http.post<EncryptedPassword>('http://localhost:8765/generate/save',data)
   }
 
@@ -37,7 +36,14 @@ export class WebPasswordService {
     return this.http.get<EncryptedPassword[]>('http://localhost:8765/generate/data',
     {
       params:psidParams
-    });
+    }).pipe(catchError(errorResponse=>{
+      let errorMessage='';
+      if(errorResponse.status==404)
+      {
+        errorMessage="Data Not Found";
+      }
+      return throwError(errorMessage);
+    }));
   }
 
   deleteDataByWebsiteName(data:string,dataPsid:string)
@@ -49,7 +55,14 @@ export class WebPasswordService {
     siteParams=siteParams.append('psid',psid);
     return this.http.delete<EncryptedPassword[]>('http://localhost:8765/generate/name',{
       params:siteParams
-    });
+    }).pipe(catchError(errorResponse=>{
+      let errorMessage='';
+      if(errorResponse.status==404)
+      {
+        errorMessage="Data Not Found";
+      }
+      return throwError(errorMessage);
+    }));
   }
 
   setUpdate(data)

@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { WebPasswordService, EncryptedPassword } from '../web-password.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import { UserauthService } from 'src/app/user-management/userauth.service';
+import { Subscription } from 'rxjs';
 
 export interface PasswordData{
   webSiteName:string
@@ -12,7 +13,7 @@ export interface PasswordData{
   templateUrl: './generatepassword.component.html',
   styleUrls: ['./generatepassword.component.css']
 })
-export class GeneratepasswordComponent implements OnInit {
+export class GeneratepasswordComponent implements OnInit,OnDestroy {
 
   constructor(private passwordService:WebPasswordService,private _snackBar: MatSnackBar,private userAuthService:UserauthService) { }
 
@@ -28,11 +29,12 @@ export class GeneratepasswordComponent implements OnInit {
   obtainedPassword:string='';
   obtained:boolean=false;
   psid:string
+  userServiceSubscription:Subscription;
   ngOnInit(): void {
     this.generatePassword=new FormGroup({
       'websitename':new FormControl(null,[Validators.required])
     })
-    this.userAuthService.getPsidBehaviourSubject().subscribe((data)=>{
+   this.userServiceSubscription= this.userAuthService.getPsidBehaviourSubject().subscribe((data)=>{
       this.psid=data
     })
   }
@@ -78,6 +80,11 @@ export class GeneratepasswordComponent implements OnInit {
   {
     this.obtained=false;
     this.generatePassword.reset();
+  }
+
+  ngOnDestroy()
+  {
+    this.userServiceSubscription.unsubscribe();
   }
 
 }

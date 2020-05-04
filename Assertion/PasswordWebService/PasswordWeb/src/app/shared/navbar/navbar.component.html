@@ -6,10 +6,10 @@
      <i class="material-icons" (click)="onClick()">perm_contact_calendar</i> -->
          <div fxLayout="row" fxLayoutGap="50px">
               <a routerLink="/login" *ngIf="!isLogin">Login</a>
-              <a routerLink="/password"  *ngIf="isLogin">Password</a>
+              <a routerLink="/password"  *ngIf="isLogin"> Create</a>
               <a routerLink="/allcompany"  *ngIf="isLogin">List</a>
-              <a *ngIf="isLogin" (click)=onLogout()>Logout</a>
-              <a  routerLink="/signup" *ngIf="!isLogin">SignUp</a>
+              <a  routerLink="/signup" *ngIf="!isLogin">Signup</a>
+              <a *ngIf="isLogin" (click)=onLogout() class="anchoralign">Logout</a>
          </div>
     
     </div>

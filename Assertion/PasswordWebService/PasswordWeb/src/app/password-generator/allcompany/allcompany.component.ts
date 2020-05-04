@@ -22,14 +22,20 @@ export class AllcompanyComponent implements OnInit,OnDestroy {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
    psid:string;
    psidSubscription:Subscription;
+   passwordServiceSubscription:Subscription;
   constructor(private passwordService:WebPasswordService,private router:Router,private userAuthService:UserauthService){}
   ngOnInit() {
      this.psidSubscription= this.userAuthService.getPsidBehaviourSubject().subscribe((data)=>{
         this.psid=data;
       });
-      this.passwordService.getAllData(this.psid).subscribe((data)=>{
+     this.passwordServiceSubscription= this.passwordService.getAllData(this.psid).subscribe((data)=>{
       this.dataSource= new MatTableDataSource(data);
     
+    },(error)=>{
+      console.log('in the error')
+      console.log(error)
+      this.noData=true;
+      this.noDataMessage="No Data is Registered"
     })
     this.dataSource.paginator = this.paginator;
   }
@@ -58,6 +64,11 @@ export class AllcompanyComponent implements OnInit,OnDestroy {
          this.noData=true;
          this.noDataMessage="No Data is Registered"
       }
+    },error=>{
+      console.log('in the error response')
+      console.log(error)
+      this.noData=true;
+      this.noDataMessage="No Data is Registered"
     });
    }
  
@@ -87,6 +98,7 @@ export class AllcompanyComponent implements OnInit,OnDestroy {
    ngOnDestroy()
    {
      this.psidSubscription.unsubscribe();
+     this.passwordServiceSubscription.unsubscribe();
    }
 }
 const emptyData:EncryptedPassword[]=[{encryptedpassword:'',webSiteName:'',id:''}]

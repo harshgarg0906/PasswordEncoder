@@ -18,7 +18,7 @@ import com.example.demo.util.AES;
 
 @Service
 @Transactional
-public class GeneratePasswordService {
+public class GeneratePasswordService implements IGeneratePasswordService {
 
 	private final static Logger logger=LogManager.getLogger(GeneratePasswordService.class);
 	@Autowired
@@ -47,16 +47,7 @@ public class GeneratePasswordService {
 		  
 	}
 	
-//	public List<SavedEncryptedPassword> getAllData() throws AllCompanyNotFoundException
-//	{
-//		List<SavedEncryptedPassword> allData=databaseSavePassword.findAll();
-//		if(allData.isEmpty())
-//		{
-//			throw new AllCompanyNotFoundException("No Company Exist");
-//		}
-//		return allData;
-//	}
-	
+
 	public List<SavedEncryptedPassword> getAllData(String psid) throws AllCompanyNotFoundException
 	{
 		List<SavedEncryptedPassword> allData=databaseSavePassword.findAllByPsid(psid);
@@ -67,12 +58,6 @@ public class GeneratePasswordService {
 		return allData;
 	}
 	
-//	public String deleteByWebSiteName(String webSiteName)
-//	{
-//		String response=databaseSavePassword.deleteByWebSiteName(webSiteName);
-//		logger.info(response);
-//		return response;
-//	}
 	
 	public String deleteByWebSiteName(String webSiteName,String psid)
 	{
@@ -81,26 +66,7 @@ public class GeneratePasswordService {
 		return response;
 	}
 
-//	public SavedEncryptedPassword updateData(SavedEncryptedPassword password, String id) throws AllCompanyNotFoundException {
-//		Optional<SavedEncryptedPassword> obtainedData=databaseSavePassword.findById(id);
-//		logger.info(obtainedData.get());
-//		if(obtainedData.isPresent())
-//		{
-//			logger.info("in the if condition");
-//			SavedEncryptedPassword retriveData=obtainedData.get();
-//			retriveData.setEncryptedpassword(password.getEncryptedpassword());
-//			retriveData.setWebSiteName(password.getWebSiteName());
-//			databaseSavePassword.save(retriveData);
-//			logger.info("After the saving");
-//			logger.info(retriveData);
-//			return retriveData;
-//		}
-//		else
-//		{
-//			throw new AllCompanyNotFoundException("No data Exist");
-//		}
-//		
-//	}
+
 	
 	public SavedEncryptedPassword updateData(SavedEncryptedPassword password, String id,String psid) throws AllCompanyNotFoundException {
 		Optional<SavedEncryptedPassword> obtainedData=databaseSavePassword.findByIdAndPsid(id,psid);

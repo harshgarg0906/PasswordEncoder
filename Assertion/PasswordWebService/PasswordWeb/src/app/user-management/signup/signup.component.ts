@@ -25,21 +25,17 @@ export class SignupComponent implements OnInit {
     this.signUpForm=new FormGroup({
       'psid':new FormControl(null,[Validators.required]),
       'password':new FormControl(null,[Validators.required]),
-      'email':new FormControl(null,[Validators.required])
+      'email':new FormControl(null,[Validators.required,Validators.email])
     })
   }
 
 
   onSubmit()
   {
-    console.log('in the submit')
     this.data.psid=this.signUpForm.value.psid;
     this.data.password=this.signUpForm.value.password;
     this.data.email=this.signUpForm.value.email;
-    console.log(this.data)
     this.userAuthService.onSingUp(this.data).subscribe((data)=>{
-        console.log('after the signup')
-        console.log(data)
         if(data.exist==true)
         {
           console.log('useer exist')

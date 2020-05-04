@@ -21,13 +21,11 @@ public class SignUpService {
 	    User obtainedUser=userRepo.findByPsid(user.getPsid());
 	    if(obtainedUser!=null)
 	    {
-	    	System.out.println("user exist already");
 	    	user.setExist(true);
 	    	return user;
 	    }
 	    else
 	    {
-	    	System.out.println("firs time user is adding");
 	    	user.setExist(false);
 	    	userRepo.save(user);
 	    	return user;

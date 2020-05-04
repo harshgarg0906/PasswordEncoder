@@ -2,3 +2,9 @@ a{
     cursor: pointer;
     text-decoration: none;
 }
+
+.anchoralign
+{
+    margin-left: 320%;
+    color: #551A8B;
+}
